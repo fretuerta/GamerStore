@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,9 +18,12 @@ public class Articulo {
 	private Integer cantidad;
 	private Float precioVenta;
 	private Float precioAlquiler;
+
+	@ManyToOne()
+  	private Juego juego;
 	
-  	private Long juegoId;
-	private Long plataformaId;
+	@ManyToOne()
+	private Plataforma plataforma;
 	
 	private String formato;
 	
@@ -31,11 +35,11 @@ public class Articulo {
 	public Integer getCantidad() { return cantidad; }
 	public void setCantidad(Integer cantidad) { this.cantidad = cantidad; }
 
-	public Long getJuegoId() { return juegoId; }
-	public void setJuegoId(Long juegoId) { this.juegoId = juegoId; }
+	public Juego getJuego() { return juego; }
+	public void setJuego(Juego juego) { this.juego = juego; }
 
-	public Long getPlataformaId() { return plataformaId; }
-	public void setPlataformaId(Long plataformaId) { this.plataformaId = plataformaId; }
+	public Plataforma getPlataforma() { return plataforma; }
+	public void setPlataforma(Plataforma plataforma) { this.plataforma = plataforma; }
 
 	public String getFormato() { return formato; }
 	public void setFormato(String formato) { this.formato = formato; }
