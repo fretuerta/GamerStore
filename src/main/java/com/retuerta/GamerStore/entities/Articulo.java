@@ -1,5 +1,7 @@
 package com.retuerta.GamerStore.entities;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +28,8 @@ public class Articulo {
 	private Plataforma plataforma;
 	
 	private String formato;
+	private Date fechaCompra;
+	private Date fechaVenta;
 	
 	public Articulo() {}
 
@@ -49,5 +53,11 @@ public class Articulo {
 
 	public Float getPrecioAlquiler() { return precioAlquiler; }
 	public void setPrecioAlquiler(Float precioAlquiler) {this.precioAlquiler = precioAlquiler; }
+
+	public Date getFechaCompra() { return fechaCompra; }
+	public void setFechaCompra(Date fechaCompra) { this.fechaCompra = fechaCompra; }
+
+	public Date getFechaVenta() { return fechaVenta; }
+	public void setFechaVenta(Date fechaVenta) { this.fechaVenta = fechaVenta; }
 
 }
