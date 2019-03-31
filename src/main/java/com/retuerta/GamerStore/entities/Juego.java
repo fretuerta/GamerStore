@@ -16,6 +16,7 @@ public class Juego {
 	private Long id;
 	
 	private String nombre;
+	private String codigo;
 	@Lob
 	private String caratula;
 	
@@ -26,6 +27,9 @@ public class Juego {
 
 	public String getNombre() { return nombre; }
 	public void setNombre(String nombre) { this.nombre = nombre; }
+	
+	public String getCodigo() { return codigo; }
+	public void setCodigo(String codigo) { this.codigo = codigo; }
 
 	public String getCaratula() { return caratula; }
 	public void setCaratula(String caratula) { this.caratula = caratula; }
