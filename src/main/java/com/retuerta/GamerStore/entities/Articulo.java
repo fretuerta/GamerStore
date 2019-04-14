@@ -17,7 +17,8 @@ public class Articulo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private Integer cantidad;
+	private Integer cantDisponible;
+	private Integer cantAlquilados;
 	private Float precioVenta;
 	private Float precioAlquiler;
 
@@ -36,8 +37,11 @@ public class Articulo {
 	public Long getId() { return id; }
 	public void setId(Long id) { this.id = id; }
 
-	public Integer getCantidad() { return cantidad; }
-	public void setCantidad(Integer cantidad) { this.cantidad = cantidad; }
+	public Integer getCantDisponible() { return cantDisponible; }
+	public void setCantDisponible(Integer cantidad) { this.cantDisponible = cantidad; }
+
+	public Integer getCantAlquilados() { return cantAlquilados; }
+	public void setCantAlquilados(Integer cantidad) { this.cantAlquilados = cantidad; }
 
 	public Juego getJuego() { return juego; }
 	public void setJuego(Juego juego) { this.juego = juego; }

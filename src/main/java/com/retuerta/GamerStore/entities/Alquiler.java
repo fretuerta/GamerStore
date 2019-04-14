@@ -20,6 +20,9 @@ public class Alquiler {
 	@ManyToOne()
 	private Articulo articulo;
 	
+	@ManyToOne()
+	private Cliente cliente;
+	
 	private Date fechaInicio;
 	private Date fechaFin;
 	
@@ -31,6 +34,9 @@ public class Alquiler {
 
 	public Articulo getArticulo() { return articulo; }
 	public void setArticulo(Articulo articulo) { this.articulo = articulo; }
+	
+	public Cliente getCliente() { return cliente; }
+	public void setCliente(Cliente cliente) { this.cliente = cliente; }
 	
 	public Date getFechaInicio() { return fechaInicio; }
 	public void setFechaInicio(Date fechaInicio) { this.fechaInicio = fechaInicio; }
