@@ -1,5 +1,6 @@
 package com.retuerta.GamerStore.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.retuerta.GamerStore.DTO.AlquilerDTO;
 import com.retuerta.GamerStore.entities.Alquiler;
+import com.retuerta.GamerStore.entities.AlquilerDetalle;
+import com.retuerta.GamerStore.repositories.AlquilerDetalleRepository;
 import com.retuerta.GamerStore.repositories.AlquilerRepository;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
@@ -24,6 +28,9 @@ public class AlquilerController {
 	
 	@Autowired
 	private AlquilerRepository alquilerRepository;
+	
+	@Autowired
+	private AlquilerDetalleRepository alquilerDetalleRepository;
 	
 	@GetMapping("/alquileres")
 	public List<Alquiler> retrieveAllAlquiler() {
@@ -37,9 +44,25 @@ public class AlquilerController {
 	}
 	
 	@PostMapping("/alquiler")
-	public List<Alquiler> createAlquiler(@RequestBody Alquiler alquiler) {
-		alquilerRepository.save(alquiler);
-		return alquilerRepository.findAll();
+	public Long createAlquiler(@RequestBody AlquilerDTO alquilerDTO) {
+
+		Alquiler alquiler = new Alquiler();
+		alquiler.setCliente(alquilerDTO.getCliente());
+		alquiler.setFechaInicio(alquilerDTO.getFechaInicio());
+		alquiler.setFechaFin(alquilerDTO.getFechaFin());
+		Alquiler alquilerResult = alquilerRepository.save(alquiler);
+		
+	  	List<AlquilerDetalle> alquilerDetalles = new ArrayList<AlquilerDetalle>();
+		alquilerDetalles = alquilerDTO.getAlquilerDetalles();
+		if (alquilerDetalles != null) {
+			for (AlquilerDetalle alqDet : alquilerDetalles) {
+				alqDet.setAlquiler(alquilerResult);
+				alquilerDetalleRepository.save(alqDet);
+			}		
+		}
+
+	
+		return alquilerResult.getId();
 	}
 	
 	@PutMapping("/alquiler/{id}")

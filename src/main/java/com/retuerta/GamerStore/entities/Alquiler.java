@@ -18,9 +18,6 @@ public class Alquiler {
 	private Long id;
 	
 	@ManyToOne()
-	private Articulo articulo;
-	
-	@ManyToOne()
 	private Cliente cliente;
 	
 	private Date fechaInicio;
@@ -32,9 +29,6 @@ public class Alquiler {
 	public Long getId() { return id; }
 	public void setId(Long id) { this.id = id; }
 
-	public Articulo getArticulo() { return articulo; }
-	public void setArticulo(Articulo articulo) { this.articulo = articulo; }
-	
 	public Cliente getCliente() { return cliente; }
 	public void setCliente(Cliente cliente) { this.cliente = cliente; }
 	

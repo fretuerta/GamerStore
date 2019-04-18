@@ -1,20 +1,22 @@
 package com.retuerta.GamerStore.DTO;
 
+import java.util.List;
+
 import com.retuerta.GamerStore.entities.Alquiler;
-import com.retuerta.GamerStore.entities.Articulo;
+import com.retuerta.GamerStore.entities.AlquilerDetalle;
 
 public class AlquilerDTO extends Alquiler {
 
-  	private Articulo articulo;
+  	private List<AlquilerDetalle> alquilerDetalles;
 	
 	public AlquilerDTO() {super();}
 
-	public Articulo getArticulo() {
-		return articulo;
+	public List<AlquilerDetalle> getAlquilerDetalles() {
+		return alquilerDetalles;
 	}
 
-	public void setArticulo(Articulo articulo) {
-		this.articulo = articulo;
+	public void setAlquilerDetalles(List<AlquilerDetalle> alquilerDetalles) {
+		this.alquilerDetalles = alquilerDetalles;
 	}
 
 }
