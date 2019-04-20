@@ -1,7 +1,5 @@
 package com.retuerta.GamerStore.entities;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,8 +15,8 @@ public class Articulo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private Integer cantDisponible;
-	private Integer cantAlquilados;
+	private Integer cantDispVenta;
+	private Integer cantDispAlquiler;
 	private Float precioVenta;
 	private Float precioAlquiler;
 
@@ -29,19 +27,17 @@ public class Articulo {
 	private Plataforma plataforma;
 	
 	private String formato;
-	private Date fechaCompra;
-	private Date fechaVenta;
 	
 	public Articulo() {}
 
 	public Long getId() { return id; }
 	public void setId(Long id) { this.id = id; }
 
-	public Integer getCantDisponible() { return cantDisponible; }
-	public void setCantDisponible(Integer cantidad) { this.cantDisponible = cantidad; }
+	public Integer getCantDispVenta() { return cantDispVenta; }
+	public void setCantDispVenta(Integer cantidad) { this.cantDispVenta = cantidad; }
 
-	public Integer getCantAlquilados() { return cantAlquilados; }
-	public void setCantAlquilados(Integer cantidad) { this.cantAlquilados = cantidad; }
+	public Integer getCantDispAlquiler() { return cantDispAlquiler; }
+	public void setCantDispAlquiler(Integer cantidad) { this.cantDispAlquiler = cantidad; }
 
 	public Juego getJuego() { return juego; }
 	public void setJuego(Juego juego) { this.juego = juego; }
@@ -57,11 +53,5 @@ public class Articulo {
 
 	public Float getPrecioAlquiler() { return precioAlquiler; }
 	public void setPrecioAlquiler(Float precioAlquiler) {this.precioAlquiler = precioAlquiler; }
-
-	public Date getFechaCompra() { return fechaCompra; }
-	public void setFechaCompra(Date fechaCompra) { this.fechaCompra = fechaCompra; }
-
-	public Date getFechaVenta() { return fechaVenta; }
-	public void setFechaVenta(Date fechaVenta) { this.fechaVenta = fechaVenta; }
 
 }
