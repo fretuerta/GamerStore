@@ -19,6 +19,7 @@ public class Articulo {
 	private Integer cantDispAlquiler;
 	private Float precioVenta;
 	private Float precioAlquiler;
+	private String codigo;
 
 	@ManyToOne()
   	private Juego juego;
@@ -54,4 +55,6 @@ public class Articulo {
 	public Float getPrecioAlquiler() { return precioAlquiler; }
 	public void setPrecioAlquiler(Float precioAlquiler) {this.precioAlquiler = precioAlquiler; }
 
+	public String getCodigo() { return codigo; }
+	public void setCodigo(String codigo) { this.codigo = codigo; }
 }

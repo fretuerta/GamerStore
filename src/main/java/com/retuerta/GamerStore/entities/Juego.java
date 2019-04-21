@@ -17,6 +17,7 @@ public class Juego {
 	
 	private String nombre;
 	private String codigo;
+	
 	@Lob
 	private String caratula;
 	
