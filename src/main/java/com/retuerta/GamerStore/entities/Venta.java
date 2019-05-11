@@ -21,6 +21,7 @@ public class Venta {
 	private Cliente cliente;
 	
 	private Date fechaVenta;
+	private float total;
 
 	public Venta() {}
 
@@ -32,5 +33,8 @@ public class Venta {
 	
 	public Date getFechaVenta() { return fechaVenta; }
 	public void setFechaVenta(Date fechaVenta) { this.fechaVenta = fechaVenta; }
+	
+	public float getTotal() {return total;}
+	public void setTotal(float total) { this.total = total;}
 	
 }

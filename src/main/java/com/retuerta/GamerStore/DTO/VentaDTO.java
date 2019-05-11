@@ -10,6 +10,13 @@ public class VentaDTO extends Venta {
   	private List<VentaDetalle> ventaDetalles;
 	
 	public VentaDTO() {super();}
+	public VentaDTO(Venta venta) {
+		super();
+		this.setId(venta.getId());
+		this.setCliente(venta.getCliente());
+		this.setFechaVenta(venta.getFechaVenta());
+		this.setTotal(venta.getTotal());
+	}
 
 	public List<VentaDetalle> getVentaDetalles() {
 		return ventaDetalles;
@@ -19,4 +26,7 @@ public class VentaDTO extends Venta {
 		this.ventaDetalles = ventaDetalles;
 	}
 
+	public void addVentaDetalle(VentaDetalle ventaDetalle) {
+		this.ventaDetalles.add(ventaDetalle);
+	}
 }

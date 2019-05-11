@@ -50,6 +50,7 @@ public class AlquilerController {
 		alquiler.setCliente(alquilerDTO.getCliente());
 		alquiler.setFechaInicio(alquilerDTO.getFechaInicio());
 		alquiler.setFechaFin(alquilerDTO.getFechaFin());
+		alquiler.setTotal(alquilerDTO.getTotal());
 		Alquiler alquilerResult = alquilerRepository.save(alquiler);
 		
 	  	List<AlquilerDetalle> alquilerDetalles = new ArrayList<AlquilerDetalle>();

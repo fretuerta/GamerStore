@@ -49,6 +49,7 @@ public class VentaController {
 		Venta venta = new Venta();
 		venta.setCliente(ventaDTO.getCliente());
 		venta.setFechaVenta(ventaDTO.getFechaVenta());
+		venta.setTotal(ventaDTO.getTotal());
 		Venta ventaResult = ventaRepository.save(venta);
 		
 	  	List<VentaDetalle> ventaDetalles = new ArrayList<VentaDetalle>();
