@@ -22,6 +22,7 @@ import com.retuerta.GamerStore.repositories.AlquilerDetalleRepository;
 import com.retuerta.GamerStore.repositories.AlquilerRepository;
 import com.retuerta.GamerStore.repositories.VentaDetalleRepository;
 import com.retuerta.GamerStore.repositories.VentaRepository;
+import com.retuerta.GamerStore.services.FacturaService;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
@@ -68,6 +69,13 @@ public class FacturaController {
 		return facturasList;
 		
 	}
+	
+	@GetMapping("/facturas/pdf/tipo/{tipo}/id/{id}")
+	public byte[] getFacturaPDF(@PathVariable char tipo,@PathVariable Long id) {
+		FacturaService facturaService = new FacturaService();
+		return facturaService.generateReport(id, tipo);
+	}
+	
 	
 	@GetMapping("/facturas/det/{clienteId}")
 	public List<FacturaDTO> retrieveFacturasDetCliente(@PathVariable Long clienteId) {
