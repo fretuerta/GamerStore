@@ -16,10 +16,12 @@ import com.retuerta.GamerStore.DTO.FacturaDTO;
 import com.retuerta.GamerStore.DTO.VentaDTO;
 import com.retuerta.GamerStore.entities.Alquiler;
 import com.retuerta.GamerStore.entities.AlquilerDetalle;
+import com.retuerta.GamerStore.entities.Articulo;
 import com.retuerta.GamerStore.entities.Venta;
 import com.retuerta.GamerStore.entities.VentaDetalle;
 import com.retuerta.GamerStore.repositories.AlquilerDetalleRepository;
 import com.retuerta.GamerStore.repositories.AlquilerRepository;
+import com.retuerta.GamerStore.repositories.ArticuloRepository;
 import com.retuerta.GamerStore.repositories.VentaDetalleRepository;
 import com.retuerta.GamerStore.repositories.VentaRepository;
 import com.retuerta.GamerStore.services.FacturaService;
@@ -40,6 +42,9 @@ public class FacturaController {
 	
 	@Autowired
 	private AlquilerDetalleRepository alquilerDetalleRepository;
+	
+	@Autowired
+	private ArticuloRepository articuloRepository;
 	
 	@GetMapping("/facturas/{clienteId}")
 	public List<FacturaDTO> retrieveFacturasCliente(@PathVariable Long clienteId) {
@@ -156,5 +161,40 @@ public class FacturaController {
 		return facturaDTO;
 	}
 	
+	@GetMapping("/facturas/delete/{numFacturaString}")
+	public String deleteFactura(@PathVariable String numFacturaString) {
+		
+		if (numFacturaString.length() < 2) { return "N"; }
 
+		Long id = Long.parseLong(numFacturaString.substring(1));
+		char tipo = numFacturaString.charAt(0);
+		
+		if (tipo == 'A') {
+			List<AlquilerDetalle> alquilerDetalles = alquilerDetalleRepository.findAll();
+			for (AlquilerDetalle alqDet : alquilerDetalles) {
+				if (alqDet.getAlquiler().getId() == id) {
+					Articulo articulo = alqDet.getArticulo();
+					articulo.setCantDispAlquiler(articulo.getCantDispAlquiler() + alqDet.getCantidad());
+					articuloRepository.save(articulo);
+					alquilerDetalleRepository.deleteById(alqDet.getId());
+				}
+			}
+			alquilerRepository.deleteById(id);
+		}
+		if (tipo == 'V') {
+			List<VentaDetalle> ventaDetalles = ventaDetalleRepository.findAll();
+			for (VentaDetalle vntDet : ventaDetalles) {
+				if (vntDet.getVenta().getId() == id) {
+					Articulo articulo = vntDet.getArticulo();
+					articulo.setCantDispVenta(articulo.getCantDispVenta() + vntDet.getCantidad());
+					articuloRepository.save(articulo);
+					ventaDetalleRepository.deleteById(vntDet.getId());
+				}
+			}
+			ventaRepository.deleteById(id);
+		}
+		
+		return "S";
+	}
+	
 }

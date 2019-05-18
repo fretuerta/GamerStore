@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.retuerta.GamerStore.DTO.VentaDTO;
+import com.retuerta.GamerStore.entities.Articulo;
 import com.retuerta.GamerStore.entities.Venta;
 import com.retuerta.GamerStore.entities.VentaDetalle;
+import com.retuerta.GamerStore.repositories.ArticuloRepository;
 import com.retuerta.GamerStore.repositories.VentaDetalleRepository;
 import com.retuerta.GamerStore.repositories.VentaRepository;
 
@@ -31,6 +33,9 @@ public class VentaController {
 	
 	@Autowired
 	private VentaDetalleRepository ventaDetalleRepository;
+	
+	@Autowired
+	private ArticuloRepository articuloRepository;
 	
 	@GetMapping("/ventas")
 	public List<Venta> retrieveAllVenta() {
@@ -58,6 +63,13 @@ public class VentaController {
 			for (VentaDetalle vntDet : ventaDetalles) {
 				vntDet.setVenta(ventaResult);
 				ventaDetalleRepository.save(vntDet);
+				
+				Articulo articuloTemp = articuloRepository.getOne(vntDet.getArticulo().getId());
+				int cantidadDisponibleVenta = articuloTemp.getCantDispVenta();
+				cantidadDisponibleVenta -= vntDet.getCantidad();
+				if (cantidadDisponibleVenta < 0) cantidadDisponibleVenta = 0;
+				articuloTemp.setCantDispVenta(cantidadDisponibleVenta);
+				articuloRepository.save(articuloTemp);
 			}		
 		}
 	

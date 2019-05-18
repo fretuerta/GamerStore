@@ -321,6 +321,12 @@ MIT
 @angular/common
 MIT
 
+@angular/platform-browser
+MIT
+
+@angular/http
+MIT
+
 @angular/animations
 MIT
 
@@ -374,9 +380,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-@angular/platform-browser
-MIT
-
 @angular/material/dialog
 
 @angular/forms
@@ -389,14 +392,13 @@ MIT
 @angular/router
 MIT
 
+@angular/material/progress-spinner
+
 @angular/material/card
 
 @angular/material/form-field
 
 @angular/material/table
-
-@angular/http
-MIT
 
 ngx-barcode-scanner
 MIT

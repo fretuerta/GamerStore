@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.retuerta.GamerStore.DTO.AlquilerDTO;
 import com.retuerta.GamerStore.entities.Alquiler;
 import com.retuerta.GamerStore.entities.AlquilerDetalle;
+import com.retuerta.GamerStore.entities.Articulo;
 import com.retuerta.GamerStore.repositories.AlquilerDetalleRepository;
 import com.retuerta.GamerStore.repositories.AlquilerRepository;
+import com.retuerta.GamerStore.repositories.ArticuloRepository;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
@@ -31,6 +33,9 @@ public class AlquilerController {
 	
 	@Autowired
 	private AlquilerDetalleRepository alquilerDetalleRepository;
+	
+	@Autowired
+	private ArticuloRepository articuloRepository;
 	
 	@GetMapping("/alquileres")
 	public List<Alquiler> retrieveAllAlquiler() {
@@ -59,9 +64,15 @@ public class AlquilerController {
 			for (AlquilerDetalle alqDet : alquilerDetalles) {
 				alqDet.setAlquiler(alquilerResult);
 				alquilerDetalleRepository.save(alqDet);
-			}		
+				
+				Articulo articuloTemp = articuloRepository.getOne(alqDet.getArticulo().getId());
+				int cantidadDisponibleAlquiler = articuloTemp.getCantDispAlquiler();
+				cantidadDisponibleAlquiler -= alqDet.getCantidad();
+				if (cantidadDisponibleAlquiler < 0) cantidadDisponibleAlquiler = 0;
+				articuloTemp.setCantDispAlquiler(cantidadDisponibleAlquiler);
+				articuloRepository.save(articuloTemp);
+			}
 		}
-
 	
 		return alquilerResult.getId();
 	}
