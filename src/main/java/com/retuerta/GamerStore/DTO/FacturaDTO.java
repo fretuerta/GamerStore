@@ -13,7 +13,7 @@ public class FacturaDTO {
 	private String numFactura;
 	private Cliente cliente;
 	private Date fechaFactura;
-	private float total;
+	private double total;
   	private List<FacturaDetalleDTO> facturaDetalles;
 	
 	public FacturaDTO() {}
@@ -27,8 +27,8 @@ public class FacturaDTO {
 	public Date getFechaFactura() { return fechaFactura; }
 	public void setFechaFactura(Date fechaFactura) { this.fechaFactura = fechaFactura; }
 	
-	public float getTotal() {return total;}
-	public void setTotal(float total) { this.total = total;}
+	public double getTotal() {return total;}
+	public void setTotal(double total) { this.total = total;}
 
 	public List<FacturaDetalleDTO> getVentaDetalles() {
 		return facturaDetalles;

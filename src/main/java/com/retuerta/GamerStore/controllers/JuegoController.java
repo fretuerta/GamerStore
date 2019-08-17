@@ -1,7 +1,6 @@
 package com.retuerta.GamerStore.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.retuerta.GamerStore.entities.Juego;
-import com.retuerta.GamerStore.repositories.JuegoRepository;
+import com.retuerta.GamerStore.services.JuegoService;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
@@ -25,36 +24,35 @@ import com.retuerta.GamerStore.repositories.JuegoRepository;
 public class JuegoController {
 	
 	@Autowired
-	private JuegoRepository juegoRepository;
+	private JuegoService juegoService;
 
 	@GetMapping("/juegos")
 	public List<Juego> retrieveAllJuego() {
-		//return plataformaRepository.findAll();
-		return juegoRepository.findAllByOrderByNombreAsc();
+		return juegoService.getJuegos();
 	}
-	
+
 	@GetMapping("/juego/{id}")
 	public Juego retrieveJuego(@PathVariable Long id) {
-		Optional<Juego> juego = juegoRepository.findById(id);
-		return juego.get();
+		return juegoService.getJuego(id);
 	}
-	
+
 	@PostMapping("/juego")
-	public List<Juego> createJuego(@Valid @RequestBody Juego juego) {
-		juegoRepository.save(juego);
-		return juegoRepository.findAllByOrderByNombreAsc();
+	public List<Juego> addJuego(@Valid @RequestBody Juego juego) {
+		juegoService.addJuego(juego);
+		return juegoService.getJuegos();
 	}
-	
+
 	@PutMapping("/juego/{id}")
 	public List<Juego> updateJuego(@Valid @RequestBody Juego juego, @PathVariable Long id) {
 		juego.setId(id);
-		juegoRepository.save(juego);
-		return juegoRepository.findAllByOrderByNombreAsc();
+		juegoService.updateJuego(juego);
+		return juegoService.getJuegos();
 	}
-	
+
 	@DeleteMapping("/juego/{id}")
 	public List<Juego> deleteJuego(@PathVariable Long id) {
-		juegoRepository.deleteById(id);
-		return juegoRepository.findAllByOrderByNombreAsc();
+		juegoService.deleteJuego(id);
+		return juegoService.getJuegos();
 	}
+
 }

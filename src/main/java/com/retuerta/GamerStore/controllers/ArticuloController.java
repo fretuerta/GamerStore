@@ -1,7 +1,6 @@
 package com.retuerta.GamerStore.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.retuerta.GamerStore.entities.Articulo;
-import com.retuerta.GamerStore.repositories.ArticuloRepository;
+import com.retuerta.GamerStore.services.ArticuloService;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
@@ -23,36 +22,40 @@ import com.retuerta.GamerStore.repositories.ArticuloRepository;
 public class ArticuloController {
 	
 	@Autowired
-	private ArticuloRepository articuloRepository;
+	private ArticuloService	articuloService;
 	
 	@GetMapping("/articulos")
 	public List<Articulo> retrieveAllArticulo() {
-		return articuloRepository.findAll();
+		return articuloService.getArticulos();
 	}
 	
+	@GetMapping("/articulos/list")
+	public List<Articulo> retrieveAllArticuloSinCaratula() {
+		return articuloService.getArticulosSinCaratula();
+	}
+
 	@GetMapping("/articulo/{id}")
 	public Articulo retrieveArticulo(@PathVariable Long id) {
-		Optional<Articulo> articulo = articuloRepository.findById(id);
-		return articulo.get();
+		return articuloService.getArticulo(id);
 	}
-	
+
 	@PostMapping("/articulo")
 	public List<Articulo> createArticulo(@RequestBody Articulo articulo) {
-		articuloRepository.save(articulo);
-		return articuloRepository.findAll();
+		articuloService.addArticulo(articulo);
+		return articuloService.getArticulosSinCaratula();
 	}
 	
 	@PutMapping("/articulo/{id}")
 	public List<Articulo> updateArticulo(@RequestBody Articulo articulo, @PathVariable Long id) {
 		articulo.setId(id);
-		articuloRepository.save(articulo);
-		return articuloRepository.findAll();
+		articuloService.updateArticulo(articulo);
+		return articuloService.getArticulosSinCaratula();
 	}
-	
+
 	@DeleteMapping("/articulo/{id}")
 	public List<Articulo> deleteArticulo(@PathVariable Long id) {
-		articuloRepository.deleteById(id);
-		return articuloRepository.findAll();
+		articuloService.deleteArticulo(id);
+		return articuloService.getArticulosSinCaratula();
 	}
 
 }

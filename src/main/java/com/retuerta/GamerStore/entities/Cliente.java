@@ -25,76 +25,31 @@ public class Cliente {
 	
 	public Cliente() {}
 
-	public Long getId() {
-		return id;
-	}
+	public Long getId() { return id; }
+	public void setId(Long id) { this.id = id; }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	public String getNombre() { return nombre; }
+	public void setNombre(String nombre) { this.nombre = nombre; }
 
-	public String getNombre() {
-		return nombre;
-	}
+	public String getApellidos() { return apellidos; }
+	public void setApellidos(String apellidos) { this.apellidos = apellidos; }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+	public String getDni() { return dni; }
+	public void setDni(String dni) { this.dni = dni; }
 
-	public String getApellidos() {
-		return apellidos;
-	}
+	public String getTelefono() { return telefono; }
+	public void setTelefono(String telefono) { this.telefono = telefono; }
 
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
-	}
+	public String getDireccion() { return direccion; }
+	public void setDireccion(String direccion) { this.direccion = direccion; }
 
-	public String getDni() {
-		return dni;
-	}
+	public Integer getCodPostal() { return codPostal; }
+	public void setCodPostal(Integer codPostal) { this.codPostal = codPostal; }
 
-	public void setDni(String dni) {
-		this.dni = dni;
-	}
+	public String getPoblacion() { return poblacion; }
+	public void setPoblacion(String poblacion) { this.poblacion = poblacion; }
 
-	public String getTelefono() {
-		return telefono;
-	}
-
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-
-	public String getDireccion() {
-		return direccion;
-	}
-
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
-
-	public Integer getCodPostal() {
-		return codPostal;
-	}
-
-	public void setCodPostal(Integer codPostal) {
-		this.codPostal = codPostal;
-	}
-
-	public String getPoblacion() {
-		return poblacion;
-	}
-
-	public void setPoblacion(String poblacion) {
-		this.poblacion = poblacion;
-	}
-
-	public String getProvincia() {
-		return provincia;
-	}
-
-	public void setProvincia(String provincia) {
-		this.provincia = provincia;
-	}
+	public String getProvincia() { return provincia; }
+	public void setProvincia(String provincia) { this.provincia = provincia; }
 
 }

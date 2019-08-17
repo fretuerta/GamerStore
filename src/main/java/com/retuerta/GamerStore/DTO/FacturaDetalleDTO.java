@@ -9,7 +9,7 @@ public class FacturaDetalleDTO {
 	private Long id;
 	private Articulo articulo;
 	private int cantidad;
-	private float precio;
+	private double precio;
 	
 	public FacturaDetalleDTO() {}
 	public FacturaDetalleDTO(AlquilerDetalle alquilerDetalle) {
@@ -34,7 +34,7 @@ public class FacturaDetalleDTO {
 	public int getCantidad() { return cantidad; }
 	public void setCantidad(int cantidad) { this.cantidad = cantidad; }
 	
-	public float getPrecio() { return precio; }
-	public void setPrecio(float precio) { this.precio = precio; }
+	public double getPrecio() { return precio; }
+	public void setPrecio(double precio) { this.precio = precio; }
 	
 }

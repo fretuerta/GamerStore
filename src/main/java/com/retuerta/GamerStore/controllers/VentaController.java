@@ -1,27 +1,19 @@
 package com.retuerta.GamerStore.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.retuerta.GamerStore.DTO.VentaDTO;
-import com.retuerta.GamerStore.entities.Articulo;
 import com.retuerta.GamerStore.entities.Venta;
-import com.retuerta.GamerStore.entities.VentaDetalle;
-import com.retuerta.GamerStore.repositories.ArticuloRepository;
-import com.retuerta.GamerStore.repositories.VentaDetalleRepository;
-import com.retuerta.GamerStore.repositories.VentaRepository;
+import com.retuerta.GamerStore.services.VentaService;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
@@ -29,64 +21,22 @@ import com.retuerta.GamerStore.repositories.VentaRepository;
 public class VentaController {
 	
 	@Autowired
-	private VentaRepository ventaRepository;
-	
-	@Autowired
-	private VentaDetalleRepository ventaDetalleRepository;
-	
-	@Autowired
-	private ArticuloRepository articuloRepository;
-	
+	private VentaService ventaService;
+
+
 	@GetMapping("/ventas")
-	public List<Venta> retrieveAllVenta() {
-		return ventaRepository.findAll();
+	public List<Venta> getVentas() {
+		return ventaService.getVentas();
 	}
-	
+
 	@GetMapping("/venta/{id}")
-	public Venta retrieveVenta(@PathVariable Long id) {
-		Optional<Venta> venta = ventaRepository.findById(id);
-		return venta.get();
+	public Venta getVenta(@PathVariable Long id) {
+		return ventaService.getVenta(id);
 	}
-	
+
 	@PostMapping("/venta")
 	public Long createVenta(@RequestBody VentaDTO ventaDTO) {
-
-		Venta venta = new Venta();
-		venta.setCliente(ventaDTO.getCliente());
-		venta.setFechaVenta(ventaDTO.getFechaVenta());
-		venta.setTotal(ventaDTO.getTotal());
-		Venta ventaResult = ventaRepository.save(venta);
-		
-	  	List<VentaDetalle> ventaDetalles = new ArrayList<VentaDetalle>();
-	  	ventaDetalles = ventaDTO.getVentaDetalles();
-		if (ventaDetalles != null) {
-			for (VentaDetalle vntDet : ventaDetalles) {
-				vntDet.setVenta(ventaResult);
-				ventaDetalleRepository.save(vntDet);
-				
-				Articulo articuloTemp = articuloRepository.getOne(vntDet.getArticulo().getId());
-				int cantidadDisponibleVenta = articuloTemp.getCantDispVenta();
-				cantidadDisponibleVenta -= vntDet.getCantidad();
-				if (cantidadDisponibleVenta < 0) cantidadDisponibleVenta = 0;
-				articuloTemp.setCantDispVenta(cantidadDisponibleVenta);
-				articuloRepository.save(articuloTemp);
-			}		
-		}
-	
-		return ventaResult.getId();
-	}
-	
-	@PutMapping("/venta/{id}")
-	public List<Venta> updateVenta(@RequestBody Venta venta, @PathVariable Long id) {
-		venta.setId(id);
-		ventaRepository.save(venta);
-		return ventaRepository.findAll();
-	}
-	
-	@DeleteMapping("/venta/{id}")
-	public List<Venta> deleteVenta(@PathVariable Long id) {
-		ventaRepository.deleteById(id);
-		return ventaRepository.findAll();
+		return ventaService.addVenta(ventaDTO);
 	}
 
 }

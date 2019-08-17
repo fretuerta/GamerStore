@@ -22,7 +22,7 @@ public class VentaDetalle {
 	private Venta venta;
 	
 	private int cantidad;
-	private float precio;
+	private double precio;
 	
 	public VentaDetalle() {}
 
@@ -38,7 +38,7 @@ public class VentaDetalle {
 	public int getCantidad() { return cantidad; }
 	public void setCantidad(int cantidad) { this.cantidad = cantidad; }
 	
-	public float getPrecio() { return precio; }
-	public void setPrecio(float precio) { this.precio = precio; }
+	public double getPrecio() { return precio; }
+	public void setPrecio(double precio) { this.precio = precio; }
 	
 }

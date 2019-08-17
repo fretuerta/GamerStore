@@ -22,7 +22,7 @@ public class Alquiler {
 	
 	private Date fechaInicio;
 	private Date fechaFin;
-	private float total;
+	private double total;
 
 	public Alquiler() {}
 
@@ -38,7 +38,7 @@ public class Alquiler {
 	public Date getFechaFin() { return fechaFin; }
 	public void setFechaFin(Date fechaFin) { this.fechaFin = fechaFin; }
 	
-	public float getTotal() {return total;}
-	public void setTotal(float total) { this.total = total;}
+	public double getTotal() {return total;}
+	public void setTotal(double total) { this.total = total;}
 	
 }
