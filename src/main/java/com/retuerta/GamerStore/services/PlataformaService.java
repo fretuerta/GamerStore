@@ -14,6 +14,9 @@ public class PlataformaService {
 	
 	@Autowired
 	private PlataformaRepository plataformaRepository;
+	
+	@Autowired
+	private ArticuloService articuloService;
 
 	public List<Plataforma> getPlataformas() {
 		return plataformaRepository.findAllByOrderByNombreAsc();
@@ -37,18 +40,13 @@ public class PlataformaService {
 	
 	public boolean deletePlataforma(long id) {
 
+		articuloService.deleteArticuloPlataformaId(id);
+		
 		if (plataformaRepository.existsById(id)) {
 			plataformaRepository.deleteById(id);
 			return true;
 		}
 		return false;
 	}
-	
-	// EJEMPLOS
-	public List<Plataforma> getPlataformaPorNombre(String nombre) {
-		List<Plataforma> plataforma = plataformaRepository.findAllPlataformasNombreContiene(nombre);
-		return plataforma;
-	}
-	
-	
+
 }

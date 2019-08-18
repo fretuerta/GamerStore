@@ -78,11 +78,31 @@ public class VentaService {
 	}
 	
 	public boolean deleteVenta(Long id) {
+		
+		List<VentaDetalle> ventaDetalles = ventaDetalleRepository.findAll();
+		for (VentaDetalle vntDet : ventaDetalles) {
+			if (vntDet.getVenta().getId() == id) {
+				Articulo articulo = vntDet.getArticulo();
+				articulo.setCantDispVenta(articulo.getCantDispVenta() + vntDet.getCantidad());
+				articuloRepository.save(articulo);
+				ventaDetalleRepository.deleteById(vntDet.getId());
+			}
+		}
+
 		if (ventaRepository.existsById(id)) {
 			ventaRepository.deleteById(id);
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean deleteVentaClienteId(Long clienteId) {
+		
+		List<Venta> ventas = ventaRepository.findAllClienteId(clienteId);
+		for (Venta venta : ventas) {
+			deleteVenta(venta.getId());
+		}
+		return true;
 	}
 	
 }

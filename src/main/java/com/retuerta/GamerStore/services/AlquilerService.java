@@ -78,11 +78,31 @@ public class AlquilerService {
 	}
 	
 	public boolean deleteAlquiler(Long id) {
+		
+		List<AlquilerDetalle> alquilerDetalles = alquilerDetalleRepository.findAll();
+		for (AlquilerDetalle alqDet : alquilerDetalles) {
+			if (alqDet.getAlquiler().getId() == id) {
+				Articulo articulo = alqDet.getArticulo();
+				articulo.setCantDispAlquiler(articulo.getCantDispAlquiler() + alqDet.getCantidad());
+				articuloRepository.save(articulo);
+				alquilerDetalleRepository.deleteById(alqDet.getId());
+			}
+		}
+
 		if (alquilerRepository.existsById(id)) {
 			alquilerRepository.deleteById(id);
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean deleteAlquilerClienteId(Long clienteId) {
+		
+		List<Alquiler> alquileres = alquilerRepository.findAllClienteId(clienteId);
+		for (Alquiler alquiler : alquileres) {
+			deleteAlquiler(alquiler.getId());
+		}
+		return true;
 	}
 	
 }

@@ -15,6 +15,9 @@ public class JuegoService {
 	@Autowired
 	private JuegoRepository juegoRepository;
 	
+	@Autowired
+	private ArticuloService articuloService;
+	
 	public List<Juego> getJuegos() {
 		return juegoRepository.findAllByOrderByNombreAsc();
 	}
@@ -35,6 +38,8 @@ public class JuegoService {
 	
 	public boolean deleteJuego(Long id) {
 
+		articuloService.deleteArticuloJuegoId(id);
+		
 		if (juegoRepository.existsById(id)) {
 			juegoRepository.deleteById(id);
 			return true;

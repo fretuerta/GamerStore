@@ -15,6 +15,12 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
+	@Autowired
+	private VentaService ventaService;
+	
+	@Autowired
+	private AlquilerService alquilerService;
+	
 	public List<Cliente> getClientes() {
 		return clienteRepository.findAll();
 	}
@@ -36,6 +42,9 @@ public class ClienteService {
 	}
 	
 	public boolean deleteCliente(Long id) {
+		
+		ventaService.deleteVentaClienteId(id);
+		alquilerService.deleteAlquilerClienteId(id);
 		
 		if (clienteRepository.existsById(id)) {
 			clienteRepository.deleteById(id);
