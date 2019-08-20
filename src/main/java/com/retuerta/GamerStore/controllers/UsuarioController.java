@@ -1,7 +1,6 @@
 package com.retuerta.GamerStore.controllers;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -18,9 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.retuerta.GamerStore.entities.Usuario;
 import com.retuerta.GamerStore.repositories.UsuarioRepository;
-
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.retuerta.GamerStore.services.TokenService;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
@@ -29,6 +26,9 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private TokenService tokenService;
 	
 	@GetMapping("/usuarios")
 	public List<Usuario> getAllUsuarios() {
@@ -53,25 +53,25 @@ public class UsuarioController {
 		
 		String hashed_password = BCrypt.hashpw(usuario.getPassword(), BCrypt.gensalt()) ;
 		usuario.setPassword(hashed_password);
-		
 		usuarioRepository.save(usuario);
+		
 	    return new ResponseEntity<>(usuario.getEmail(), HttpStatus.CREATED);
 	}
 
 	@PostMapping("/login")
 	public ResponseEntity<String> checkUsuario(@RequestBody Usuario usuario) {
 		String storedHash = "";
-		int usuarioId = -1;
+		usuario.setId(-1L);
 		boolean passwordVerified = false;
 		List<Usuario> usuarioList = new ArrayList<Usuario>();
 		usuarioList = usuarioRepository.findAll();
 		for (Usuario usr : usuarioList) {
 			if (usr.getEmail().equals(usuario.getEmail())) {
 				storedHash = usr.getPassword();
-				usuarioId = Integer.parseInt( usr.getId().toString());
+				usuario.setId(Long.parseLong(usr.getId().toString()));
 			}
 		}
-		if (usuarioId < 0) { return new ResponseEntity<String>(HttpStatus.NOT_FOUND); }
+		if (usuario.getId() < 0) { return new ResponseEntity<String>(HttpStatus.NOT_FOUND); }
 
 		if(null != storedHash && storedHash.startsWith("$2a$")) {
 			passwordVerified = BCrypt.checkpw(usuario.getPassword(), storedHash);
@@ -79,13 +79,8 @@ public class UsuarioController {
 		
 		if (!passwordVerified) { return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED); }
 		
-		String token = Jwts.builder().setIssuedAt(new Date()).setIssuer("GamerStore")
-		.setSubject("Usuario")
-		.claim("id", usuarioId)
-		.claim("email", usuario.getEmail())
-		.setExpiration(new Date(System.currentTimeMillis() + 3600000))
-		.signWith(SignatureAlgorithm.HS256, "12321").compact();
-	
+		String token = tokenService.getToken(usuario);
+		
 		return new ResponseEntity<String>(token, HttpStatus.OK);
 	}
 	
